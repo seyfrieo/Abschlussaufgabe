@@ -3,7 +3,7 @@
   "version": "0.0.1",
 
   "scripts": {
-    "start": "Client/DatabaseClient.js"
+    "start": "Main.js"
   }
   
 }
