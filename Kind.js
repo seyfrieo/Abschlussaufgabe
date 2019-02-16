@@ -18,16 +18,22 @@ var Abschlussaufgabe;
             _this._dx = 1;
             _this._dy = 0.15;
             _this.got_hit = false;
+            _this.goes_up = false;
             return _this;
         }
         Kind.prototype.move = function () {
             if (this.x < 800 || this.got_hit == false) {
                 if (this.x > 800) {
-                    this.x = 0;
-                    this.reset_speed();
-                    this.y = Math.random() * (400 - 270) + 270;
+                    this.goes_up = true;
+                    this._dx = -2;
+                    this._dy = -0.36;
+                    //this.y = Math.random() * (400 - 270) + 270;
                 }
-                if (this.x > 0)
+                if (this.x <= 0) {
+                    this.goes_up = false;
+                    this.reset_speed();
+                }
+                if (this.x > 0 && this.goes_up == false || this.got_hit == true)
                     this.accelerate();
                 this.x += this._dx; //Bewegung/Steigung
                 this.y += this._dy;
@@ -52,8 +58,8 @@ var Abschlussaufgabe;
             }
         };
         Kind.prototype.reset_speed = function () {
-            this._dx = 0.5;
-            this._dy = 0.075;
+            this._dx = 1;
+            this._dy = 0.15;
         };
         Kind.prototype.get_speed = function () {
             return (this._dx + this._dy);

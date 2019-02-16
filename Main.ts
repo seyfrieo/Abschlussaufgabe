@@ -18,7 +18,9 @@ namespace Abschlussaufgabe {
     let image: ImageData;
     let sound = new Audio ("PUNCH.mp3");
 
-    let score = 0;
+    let score: number = 0;
+
+    let time: number = 61;
     
     let objects: MovingObjects[] = [];
     let children: Kind[] = [];
@@ -99,14 +101,14 @@ namespace Abschlussaufgabe {
     }
 
     export function checkCollsision(s: Schneeball): void {
-        //objects.pop(); //schneeball vom
         let index:number = objects.indexOf(s);
-        delete objects[index];
+        delete objects[index];//schneeball nach benutzung vom array entfernen
         for (let i: number = 0; i < children.length; i++) {
             let c: Kind = children[i];
-            if (c.x && s.x < c.x+40 && s.y > c.y && s.y < c.y + 48 && c.got_hit == false) {
+            if (s.x >= c.x && s.x < c.x + 40 && s.y >= c.y && s.y < c.y + 48 && c.got_hit == false) {
                 //hit
                 c.got_hit = true;
+
 
 
                 //neues Kind wird erstellt
@@ -117,7 +119,7 @@ namespace Abschlussaufgabe {
                 children.push(k); //s wird in arrayObjects gepusht (s = neue Instanz der Klasse Skifahrer; eine Instanz = 1 Skifahrer)
 
                 //visuelles Feedback
-                score += Math.round(c.get_speed() * 10);
+                score += Math.abs(Math.round(c.get_speed() * 10)); //betrag des scores
                 sound.play();
             }
         }
@@ -125,6 +127,9 @@ namespace Abschlussaufgabe {
 
 
     function init(): void { //Hauptfunktion (vormals "Let it Snow")
+        let startscreen: HTMLDivElement = document.getElementById("startscreen") as HTMLDivElement;
+        startscreen.style.display = "none";
+
         let canvas: HTMLCanvasElement = document.getElementsByTagName("canvas")[0];
         console.log(canvas);
 
@@ -137,7 +142,7 @@ namespace Abschlussaufgabe {
         canvas.addEventListener("click", throwSnowball);
 
         //Schleife Skifahrer
-        for (let i: number = 0; i < 10; i++) {
+        for (let i: number = 0; i < 20; i++) {
             let x: number = Math.random() * (0 + 800) - 800;
             let y: number = Math.random() * (250 - 350) + 350;
             let k: Kind = new Kind(x, y);
@@ -168,29 +173,62 @@ namespace Abschlussaufgabe {
         image = crc2.getImageData(0, 0, 800, 600);
 
         animate();
+        clock();
 
     }
 
     function animate(): void {
-        crc2.clearRect(0, 0, 800, 600);  // Hintergrund refreshen
-        crc2.putImageData(image, 0, 0);
-        
-         for (let i: number = 0; i < objects.length; i++) {
-            let s: MovingObjects = objects[i];
-            if (typeof s != "undefined")
-            s.move();
+        if (time > 0) {
+            crc2.clearRect(0, 0, 800, 600);  // Hintergrund refreshen
+            crc2.putImageData(image, 0, 0);
+
+            for (let i: number = 0; i < objects.length; i++) {
+                let s: MovingObjects = objects[i];
+                if (typeof s != "undefined")
+                    s.move();
+            }
+
+            //Move B�ume
+            for (let i: number = 0; i < nbaeume.length; i++) {
+                let s: Baeume = nbaeume[i]; //Baeume=Datentyp = Speichert i-te Stelle des Arrays nbaeume
+                s.draw(); //Draw-Methode der i-ten Stelle des Arrays wird aufgerufen und ausgef�hrt
+            }
+            crc2.fillStyle = '#000000';
+            crc2.font = "12px Arial";
+            crc2.fillText("Low-Score: " + score, 700, 20);
+
+            crc2.fillText(time.toString(), 20, 20)
+            window.setTimeout(animate, 20);
+        }
+    }
+
+    function clock(): void {
+        if (!(time--)) return;
+        console.log(time);
+
+        if (time <= 0) {
+            crc2.clearRect(0, 0, 800, 600);
+            // crc2.beginPath();
+            // crc2.moveTo(0, 0);
+            // crc2.lineTo(800, 0);
+            // crc2.lineTo(800, 600);
+            // crc2.lineTo(0, 600);
+            // crc2.stroke();
+            // crc2.closePath();
+            // crc2.fillStyle = "#ffffff";
+            // crc2.fill();
+
+
+            console.log("ende");
+            let scoreElement: HTMLParagraphElement = document.getElementById("score") as HTMLParagraphElement;
+            scoreElement.innerHTML = "Glueckwunsch! Dein Low-Score beträgt: " + score;
+
+            let endscreen: HTMLDivElement = document.getElementById("endscreen") as HTMLDivElement;
+            endscreen.style.display = "block";
+
         }
 
-        //Move B�ume
-        for (let i: number = 0; i < nbaeume.length; i++) {
-            let s: Baeume = nbaeume[i]; //Baeume=Datentyp = Speichert i-te Stelle des Arrays nbaeume
-            s.draw(); //Draw-Methode der i-ten Stelle des Arrays wird aufgerufen und ausgef�hrt
-        }
-        crc2.fillStyle = '#000000';
-        crc2.font = "12px Arial";
-         crc2.fillText("Low-Score: " + score, 700, 20);
-
-        window.setTimeout(animate, 20);
+        setTimeout(clock, 1000);
     }
 
 }

@@ -5,6 +5,7 @@ namespace Abschlussaufgabe {
         _dx: number;
         _dy: number;
         got_hit: boolean;
+        goes_up: boolean;
 
 
         constructor(_x: number, _y: number) {
@@ -13,17 +14,24 @@ namespace Abschlussaufgabe {
             this._dx = 1;
             this._dy = 0.15;
             this.got_hit = false;
+            this.goes_up = false;
         }
 
         move(): void {
             if (this.x < 800 || this.got_hit == false) { //wenn Kind nicht abgeschossen wurde oder Schlitten noch im Bild ist
                 if (this.x > 800) {
-                    this.x = 0;
-                    this.reset_speed();
-                    this.y = Math.random() * (400 - 270) + 270;
+                    this.goes_up = true;
+                    this._dx = -2;
+                    this._dy = -0.36;
+
+                    //this.y = Math.random() * (400 - 270) + 270;
+                }
+                if (this.x <= 0){
+                    this.goes_up = false;
+                    this.reset_speed()
                 }
 
-                if (this.x > 0)
+                if (this.x > 0 && this.goes_up == false || this.got_hit == true)
                     this.accelerate();
                 this.x += this._dx; //Bewegung/Steigung
                 this.y += this._dy;
@@ -52,8 +60,8 @@ namespace Abschlussaufgabe {
         }
 
         reset_speed(): void {
-            this._dx = 0.5;
-            this._dy = 0.075;
+            this._dx = 1;
+            this._dy = 0.15;
         }
 
         get_speed(): number {

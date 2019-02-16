@@ -25,9 +25,17 @@ nicht kopiert und auch nicht diktiert.
 	<script type="text/javascript" src="Schneeball.js"></script>
 </head>
 <body>
-<div style="position: relative; width: 800px; height: 600px">
-	<canvas width="800" height="600" style="position: absolute; border: 1px solid black"></canvas>
-    <button id="startbtn" style="position: absolute; left: 50%; top: 40%">Start</button>
-</div>
+    <div style="position: relative; width: 800px; height: 600px">
+        <canvas width="800" height="600" style="position: absolute; border: 1px solid black"></canvas>
+        <div id="startscreen">
+            <button id="startbtn" style="position: absolute; left: 50%; top: 40%">Start</button>
+            <div id="rankings" style="position: absolute;">placeholder</div>
+        </div>
+        <div id="endscreen" style="display: none; background-color: white">
+                <p id="score"></p>
+                <input id="name">Name</input>
+                <button id="startagainbtn" style="position: absolute; left: 50%; top: 40%">Spiele nochmal!</button>
+        </div>
+    </div>
 </body>
 </html>

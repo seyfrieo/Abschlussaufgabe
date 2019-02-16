@@ -13,6 +13,7 @@ var Abschlussaufgabe;
     var image;
     var sound = new Audio("PUNCH.mp3");
     var score = 0;
+    var time = 61;
     var objects = [];
     var children = [];
     //    let nSkifahrer: number = 10; Jetzt direkt in der For-Schleife
@@ -79,12 +80,11 @@ var Abschlussaufgabe;
         objects.push(s);
     }
     function checkCollsision(s) {
-        //objects.pop(); //schneeball vom
         var index = objects.indexOf(s);
-        delete objects[index];
+        delete objects[index]; //schneeball nach benutzung vom array entfernen
         for (var i = 0; i < children.length; i++) {
             var c = children[i];
-            if (c.x && s.x < c.x + 40 && s.y > c.y && s.y < c.y + 48 && c.got_hit == false) {
+            if (s.x >= c.x && s.x < c.x + 40 && s.y >= c.y && s.y < c.y + 48 && c.got_hit == false) {
                 //hit
                 c.got_hit = true;
                 //neues Kind wird erstellt
@@ -94,13 +94,15 @@ var Abschlussaufgabe;
                 objects.push(k);
                 children.push(k); //s wird in arrayObjects gepusht (s = neue Instanz der Klasse Skifahrer; eine Instanz = 1 Skifahrer)
                 //visuelles Feedback
-                score += Math.round(c.get_speed() * 10);
+                score += Math.abs(Math.round(c.get_speed() * 10)); //betrag des scores
                 sound.play();
             }
         }
     }
     Abschlussaufgabe.checkCollsision = checkCollsision;
     function init() {
+        var startscreen = document.getElementById("startscreen");
+        startscreen.style.display = "none";
         var canvas = document.getElementsByTagName("canvas")[0];
         console.log(canvas);
         startbtn.style.display = "none";
@@ -108,7 +110,7 @@ var Abschlussaufgabe;
         draw_bg();
         canvas.addEventListener("click", throwSnowball);
         //Schleife Skifahrer
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 20; i++) {
             var x = Math.random() * (0 + 800) - 800;
             var y = Math.random() * (250 - 350) + 350;
             var k = new Abschlussaufgabe.Kind(x, y);
@@ -132,24 +134,51 @@ var Abschlussaufgabe;
         //Hintergrundbild speichern
         image = Abschlussaufgabe.crc2.getImageData(0, 0, 800, 600);
         animate();
+        clock();
     }
     function animate() {
-        Abschlussaufgabe.crc2.clearRect(0, 0, 800, 600); // Hintergrund refreshen
-        Abschlussaufgabe.crc2.putImageData(image, 0, 0);
-        for (var i = 0; i < objects.length; i++) {
-            var s = objects[i];
-            if (typeof s != "undefined")
-                s.move();
+        if (time > 0) {
+            Abschlussaufgabe.crc2.clearRect(0, 0, 800, 600); // Hintergrund refreshen
+            Abschlussaufgabe.crc2.putImageData(image, 0, 0);
+            for (var i = 0; i < objects.length; i++) {
+                var s = objects[i];
+                if (typeof s != "undefined")
+                    s.move();
+            }
+            //Move B�ume
+            for (var i = 0; i < nbaeume.length; i++) {
+                var s = nbaeume[i]; //Baeume=Datentyp = Speichert i-te Stelle des Arrays nbaeume
+                s.draw(); //Draw-Methode der i-ten Stelle des Arrays wird aufgerufen und ausgef�hrt
+            }
+            Abschlussaufgabe.crc2.fillStyle = '#000000';
+            Abschlussaufgabe.crc2.font = "12px Arial";
+            Abschlussaufgabe.crc2.fillText("Low-Score: " + score, 700, 20);
+            Abschlussaufgabe.crc2.fillText(time.toString(), 20, 20);
+            window.setTimeout(animate, 20);
         }
-        //Move B�ume
-        for (var i = 0; i < nbaeume.length; i++) {
-            var s = nbaeume[i]; //Baeume=Datentyp = Speichert i-te Stelle des Arrays nbaeume
-            s.draw(); //Draw-Methode der i-ten Stelle des Arrays wird aufgerufen und ausgef�hrt
+    }
+    function clock() {
+        if (!(time--))
+            return;
+        console.log(time);
+        if (time <= 0) {
+            Abschlussaufgabe.crc2.clearRect(0, 0, 800, 600);
+            // crc2.beginPath();
+            // crc2.moveTo(0, 0);
+            // crc2.lineTo(800, 0);
+            // crc2.lineTo(800, 600);
+            // crc2.lineTo(0, 600);
+            // crc2.stroke();
+            // crc2.closePath();
+            // crc2.fillStyle = "#ffffff";
+            // crc2.fill();
+            console.log("ende");
+            var scoreElement = document.getElementById("score");
+            scoreElement.innerHTML = "Glueckwunsch! Dein Low-Score beträgt: " + score;
+            var endscreen = document.getElementById("endscreen");
+            endscreen.style.display = "block";
         }
-        Abschlussaufgabe.crc2.fillStyle = '#000000';
-        Abschlussaufgabe.crc2.font = "12px Arial";
-        Abschlussaufgabe.crc2.fillText("Low-Score: " + score, 700, 20);
-        window.setTimeout(animate, 20);
+        setTimeout(clock, 1000);
     }
 })(Abschlussaufgabe || (Abschlussaufgabe = {}));
 //# sourceMappingURL=Main.js.map
