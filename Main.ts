@@ -18,7 +18,7 @@ namespace Abschlussaufgabe {
     let image: ImageData;
     let sound = new Audio ("PUNCH.mp3");
 
-    let score: number = 0;
+    export let score: number = 0;
 
     let time: number = 61;
     
@@ -221,7 +221,7 @@ namespace Abschlussaufgabe {
 
             console.log("ende");
             let scoreElement: HTMLParagraphElement = document.getElementById("score") as HTMLParagraphElement;
-            scoreElement.innerHTML = "Glueckwunsch! Dein Low-Score beträgt: " + score;
+            scoreElement.innerHTML = "Herzlichen Glückwunsch! Dein Low-Score beträgt: " + score;
 
             let endscreen: HTMLDivElement = document.getElementById("endscreen") as HTMLDivElement;
             endscreen.style.display = "block";

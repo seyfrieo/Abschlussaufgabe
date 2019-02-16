@@ -23,6 +23,7 @@ nicht kopiert und auch nicht diktiert.
 	<script type="text/javascript" src="Schnee.js"></script>
 	<script type="text/javascript" src="Baeume.js"></script>
 	<script type="text/javascript" src="Schneeball.js"></script>
+    <script type="text/javascript" src="Client/DatabaseClient.js"></script>
 </head>
 <body>
     <div style="position: relative; width: 800px; height: 600px">
@@ -31,10 +32,14 @@ nicht kopiert und auch nicht diktiert.
             <button id="startbtn" style="position: absolute; left: 50%; top: 40%">Start</button>
             <div id="rankings" style="position: absolute;">placeholder</div>
         </div>
-        <div id="endscreen" style="display: none; background-color: white">
+        <div id="endscreen" style="display: none; padding: 10px;">
                 <p id="score"></p>
-                <input id="name">Name</input>
+
                 <button id="startagainbtn" style="position: absolute; left: 50%; top: 40%">Spiele nochmal!</button>
+            <fieldset style="position: absolute;">
+            <input type="text" id="name" name="name" placeholder="Name" style="z-index: 10;alignment: center;">
+            <button id="insert">Absenden</button>
+        </fieldset>
         </div>
     </div>
 </body>

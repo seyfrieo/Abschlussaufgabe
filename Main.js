@@ -12,7 +12,7 @@ var Abschlussaufgabe;
     var startbtn;
     var image;
     var sound = new Audio("PUNCH.mp3");
-    var score = 0;
+    Abschlussaufgabe.score = 0;
     var time = 61;
     var objects = [];
     var children = [];
@@ -94,7 +94,7 @@ var Abschlussaufgabe;
                 objects.push(k);
                 children.push(k); //s wird in arrayObjects gepusht (s = neue Instanz der Klasse Skifahrer; eine Instanz = 1 Skifahrer)
                 //visuelles Feedback
-                score += Math.abs(Math.round(c.get_speed() * 10)); //betrag des scores
+                Abschlussaufgabe.score += Math.abs(Math.round(c.get_speed() * 10)); //betrag des scores
                 sound.play();
             }
         }
@@ -152,7 +152,7 @@ var Abschlussaufgabe;
             }
             Abschlussaufgabe.crc2.fillStyle = '#000000';
             Abschlussaufgabe.crc2.font = "12px Arial";
-            Abschlussaufgabe.crc2.fillText("Low-Score: " + score, 700, 20);
+            Abschlussaufgabe.crc2.fillText("Low-Score: " + Abschlussaufgabe.score, 700, 20);
             Abschlussaufgabe.crc2.fillText(time.toString(), 20, 20);
             window.setTimeout(animate, 20);
         }
@@ -174,7 +174,7 @@ var Abschlussaufgabe;
             // crc2.fill();
             console.log("ende");
             var scoreElement = document.getElementById("score");
-            scoreElement.innerHTML = "Glueckwunsch! Dein Low-Score beträgt: " + score;
+            scoreElement.innerHTML = "Herzlichen Glückwunsch! Dein Low-Score beträgt: " + Abschlussaufgabe.score;
             var endscreen = document.getElementById("endscreen");
             endscreen.style.display = "block";
         }
