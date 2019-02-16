@@ -1,6 +1,6 @@
 namespace Abschlussaufgabe {
     window.addEventListener("load", init);
-    let serverAddress: string = "https://seifes/rodelbahn.herokuapp.com/";
+    let serverAddress: string = "https://seyfrieo.herokuapp.com/";
 
     function init(_event: Event): void {
         console.log("Init");

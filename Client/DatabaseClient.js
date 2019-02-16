@@ -1,7 +1,7 @@
 var Abschlussaufgabe;
 (function (Abschlussaufgabe) {
     window.addEventListener("load", init);
-    var serverAddress = "https://seifes/rodelbahn.herokuapp.com/";
+    var serverAddress = "https://seyfrieo.herokuapp.com/";
     function init(_event) {
         console.log("Init");
         var insertButton = document.getElementById("insert");
