@@ -1,3 +1,11 @@
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
+//Hiermit versichere ich, dass ich diesen
+//Code selbst geschrieben habe. Er wurde
+//nicht kopiert und auch nicht diktiert.
+
 namespace Abschlussaufgabe {
 
     export class Schneeball extends MovingObjects {
@@ -41,9 +49,12 @@ namespace Abschlussaufgabe {
         draw(): void {
 
             crc2.beginPath();
-            crc2.fillStyle = '#000000';
+            crc2.fillStyle = "#ffffff";
+            crc2.strokeStyle = "#000000";
             crc2.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
             crc2.fill();
+            crc2.stroke();
+            crc2.closePath();
         }
 
     }

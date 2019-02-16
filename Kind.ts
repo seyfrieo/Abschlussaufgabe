@@ -1,3 +1,11 @@
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
+//Hiermit versichere ich, dass ich diesen
+//Code selbst geschrieben habe. Er wurde
+//nicht kopiert und auch nicht diktiert.
+
 namespace Abschlussaufgabe {
 
     export class Kind extends MovingObjects {

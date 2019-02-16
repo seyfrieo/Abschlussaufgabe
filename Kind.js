@@ -1,3 +1,10 @@
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
+//Hiermit versichere ich, dass ich diesen
+//Code selbst geschrieben habe. Er wurde
+//nicht kopiert und auch nicht diktiert.
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||

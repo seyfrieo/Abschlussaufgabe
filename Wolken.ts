@@ -1,7 +1,7 @@
-//Aufgabe: (Aufgabe 06)
-//Name: (Dominik Seyfried)
-//Matrikel: (256734)
-//Datum: (24.11.2017)
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
 //Hiermit versichere ich, dass ich diesen
 //Code selbst geschrieben habe. Er wurde
 //nicht kopiert und auch nicht diktiert.

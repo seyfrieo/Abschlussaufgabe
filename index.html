@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+
+<!--
+Abschlussaufgabe - Rodelhang Terminator
+Dominik Seyfried
+256734
+17.02.2019
+Hiermit versichere ich, dass ich diesen
+Code selbst geschrieben habe. Er wurde
+nicht kopiert und auch nicht diktiert.
+-->
+
+<title>Rodelhang Terminator</title>
+<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale = 1.0">
+	<script type="text/javascript" src="Main.js"></script>
+	<script type="text/javascript" src="MovingObjects.js"></script>
+	<script type="text/javascript" src="Kind.js"></script>
+	<script type="text/javascript" src="Wolken.js"></script>
+	<script type="text/javascript" src="Schnee.js"></script>
+	<script type="text/javascript" src="Baeume.js"></script>
+	<script type="text/javascript" src="Schneeball.js"></script>
+    <script type="text/javascript" src="Client/DatabaseClient.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div style="position: relative; width: 800px; height: 600px">
+        <canvas width="800" height="600" style="position: absolute; border: 1px solid black"></canvas>
+        <div id="startscreen">
+            <button id="startbtn" style="position: absolute; left: 46%; top: 40%; z-index: 1;">Start</button>
+            <p id="rankings" style="position: absolute; text-align: center; padding: 100px;">Hallo und herzlich Willkommen auf meiner Rodelbahn! Mal wieder genug von lauten, quengelnden Kindern? Ich auch. Wirf einfach mit einem Klick Schneebälle auf die vorbeiziehenden Rodel-Kinder und verhilf dem Gebiet zur Ruhe. Mess dich mit anderen Aktivisten im Low-Score!</p>
+        </div>
+        <div id="endscreen" style="display: none; padding: 10px;">
+            <p id="score" style="text-align: center;"></p>
+            <fieldset style="position: absolute; left: 30%; top: auto; width: 40%;">
+                <input type="text" id="name" name="name" placeholder="Name" style="z-index: 10;alignment: center;">
+                <button id="insert" style="z-index: 10;">Absenden</button>
+            </fieldset>
+            <button id="startagainbtn" style="position: absolute; left: 45%; top: 40%; text-align: center; z-index: 1;">Spiele nochmal!</button>
+            <table id="scores" style="position: absolute; top: 60%; left: 20%;">
+                <tr id="r1" style="padding: 50px;">
+                    <td id="1"></td>
+                    <td id="4"></td>
+                    <td id="7"></td>
+                </tr>
+                <tr id="r2" style="padding: 50px;">
+                    <td id="2"></td>
+                    <td id="5"></td>
+                    <td id="8"></td>
+                </tr>
+                <tr id="r3" style="padding: 50px;">
+                    <td id="3"></td>
+                    <td id="6"></td>
+                    <td id="9"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

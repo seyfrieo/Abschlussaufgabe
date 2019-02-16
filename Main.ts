@@ -1,18 +1,16 @@
-//Aufgabe: (Aufgabe 06)
-//Name: (Dominik Seyfried)
-//Matrikel: (256734)
-//Datum: (24.11.2017)
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
 //Hiermit versichere ich, dass ich diesen
 //Code selbst geschrieben habe. Er wurde
 //nicht kopiert und auch nicht diktiert.
-
 
 namespace Abschlussaufgabe {
 
 
     window.addEventListener("load", getButton);
     export let crc2: CanvasRenderingContext2D; //Variable wird in andere Dateien mit selbem Namespace exportiert
-    console.log("Hallo Welt");
     let startbtn: HTMLButtonElement;
 
     let image: ImageData;
@@ -21,14 +19,10 @@ namespace Abschlussaufgabe {
     export let score: number = 0;
 
     let time: number = 61;
-    
+
     let objects: MovingObjects[] = [];
     let children: Kind[] = [];
 
-//    let nSkifahrer: number = 10; Jetzt direkt in der For-Schleife
-//    let nSchnee: number = 1000;
-//    let nWolken: number = 3;
-//    
     let nbaeume: Baeume[] = [];
 
     function getButton(): void {
@@ -94,8 +88,6 @@ namespace Abschlussaufgabe {
     }
 
     function throwSnowball(event): void {
-        console.log(event.pageX);
-        console.log(event.pageY);
         let s: Schneeball = new Schneeball(event.pageX, event.pageY);
         objects.push(s);
     }
@@ -116,9 +108,9 @@ namespace Abschlussaufgabe {
                 let y: number = Math.random() * (250 - 350) + 350;
                 let k: Kind = new Kind(x, y);
                 objects.push(k);
-                children.push(k); //s wird in arrayObjects gepusht (s = neue Instanz der Klasse Skifahrer; eine Instanz = 1 Skifahrer)
+                children.push(k);
 
-                //visuelles Feedback
+                //Feedback
                 score += Math.abs(Math.round(c.get_speed() * 10)); //betrag des scores
                 sound.play();
             }
@@ -130,16 +122,19 @@ namespace Abschlussaufgabe {
         let startscreen: HTMLDivElement = document.getElementById("startscreen") as HTMLDivElement;
         startscreen.style.display = "none";
 
+        //werte werden bei neustart zurückgesetzt
+        time = 61;
+        score = 0;
+        objects = [];
+        children = [];
+
         let canvas: HTMLCanvasElement = document.getElementsByTagName("canvas")[0];
         console.log(canvas);
-
-        startbtn.style.display = "none";
 
         crc2 = canvas.getContext("2d");
 
         draw_bg();
 
-        canvas.addEventListener("click", throwSnowball);
 
         //Schleife Skifahrer
         for (let i: number = 0; i < 20; i++) {
@@ -175,6 +170,7 @@ namespace Abschlussaufgabe {
         animate();
         clock();
 
+        canvas.addEventListener("click", throwSnowball);
     }
 
     function animate(): void {
@@ -204,7 +200,6 @@ namespace Abschlussaufgabe {
 
     function clock(): void {
         if (!(time--)) return;
-        console.log(time);
 
         if (time <= 0) {
             crc2.clearRect(0, 0, 800, 600);
@@ -226,9 +221,23 @@ namespace Abschlussaufgabe {
             let endscreen: HTMLDivElement = document.getElementById("endscreen") as HTMLDivElement;
             endscreen.style.display = "block";
 
+            let playagain: HTMLButtonElement = document.getElementById("startagainbtn") as HTMLButtonElement;
+            playagain.addEventListener("click", play_again)
+
+
         }
 
         setTimeout(clock, 1000);
     }
+
+    function play_again(): void {
+        let endscreen: HTMLDivElement = document.getElementById("endscreen") as HTMLDivElement;
+        endscreen.style.display = "none";
+
+        let startscreen: HTMLDivElement = document.getElementById("startscreen") as HTMLDivElement;
+        startscreen.style.display = "block";
+    }
+
+
 
 }

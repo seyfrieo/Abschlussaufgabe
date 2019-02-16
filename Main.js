@@ -1,14 +1,13 @@
-//Aufgabe: (Aufgabe 06)
-//Name: (Dominik Seyfried)
-//Matrikel: (256734)
-//Datum: (24.11.2017)
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
 //Hiermit versichere ich, dass ich diesen
 //Code selbst geschrieben habe. Er wurde
 //nicht kopiert und auch nicht diktiert.
 var Abschlussaufgabe;
 (function (Abschlussaufgabe) {
     window.addEventListener("load", getButton);
-    console.log("Hallo Welt");
     var startbtn;
     var image;
     var sound = new Audio("PUNCH.mp3");
@@ -16,10 +15,6 @@ var Abschlussaufgabe;
     var time = 61;
     var objects = [];
     var children = [];
-    //    let nSkifahrer: number = 10; Jetzt direkt in der For-Schleife
-    //    let nSchnee: number = 1000;
-    //    let nWolken: number = 3;
-    //    
     var nbaeume = [];
     function getButton() {
         startbtn = document.getElementById("startbtn");
@@ -74,8 +69,6 @@ var Abschlussaufgabe;
         Abschlussaufgabe.crc2.fill();
     }
     function throwSnowball(event) {
-        console.log(event.pageX);
-        console.log(event.pageY);
         var s = new Abschlussaufgabe.Schneeball(event.pageX, event.pageY);
         objects.push(s);
     }
@@ -92,8 +85,8 @@ var Abschlussaufgabe;
                 var y = Math.random() * (250 - 350) + 350;
                 var k = new Abschlussaufgabe.Kind(x, y);
                 objects.push(k);
-                children.push(k); //s wird in arrayObjects gepusht (s = neue Instanz der Klasse Skifahrer; eine Instanz = 1 Skifahrer)
-                //visuelles Feedback
+                children.push(k);
+                //Feedback
                 Abschlussaufgabe.score += Math.abs(Math.round(c.get_speed() * 10)); //betrag des scores
                 sound.play();
             }
@@ -103,12 +96,15 @@ var Abschlussaufgabe;
     function init() {
         var startscreen = document.getElementById("startscreen");
         startscreen.style.display = "none";
+        //werte werden bei neustart zurückgesetzt
+        time = 61;
+        Abschlussaufgabe.score = 0;
+        objects = [];
+        children = [];
         var canvas = document.getElementsByTagName("canvas")[0];
         console.log(canvas);
-        startbtn.style.display = "none";
         Abschlussaufgabe.crc2 = canvas.getContext("2d");
         draw_bg();
-        canvas.addEventListener("click", throwSnowball);
         //Schleife Skifahrer
         for (var i = 0; i < 20; i++) {
             var x = Math.random() * (0 + 800) - 800;
@@ -135,6 +131,7 @@ var Abschlussaufgabe;
         image = Abschlussaufgabe.crc2.getImageData(0, 0, 800, 600);
         animate();
         clock();
+        canvas.addEventListener("click", throwSnowball);
     }
     function animate() {
         if (time > 0) {
@@ -160,7 +157,6 @@ var Abschlussaufgabe;
     function clock() {
         if (!(time--))
             return;
-        console.log(time);
         if (time <= 0) {
             Abschlussaufgabe.crc2.clearRect(0, 0, 800, 600);
             // crc2.beginPath();
@@ -177,8 +173,16 @@ var Abschlussaufgabe;
             scoreElement.innerHTML = "Herzlichen Glückwunsch! Dein Low-Score beträgt: " + Abschlussaufgabe.score;
             var endscreen = document.getElementById("endscreen");
             endscreen.style.display = "block";
+            var playagain = document.getElementById("startagainbtn");
+            playagain.addEventListener("click", play_again);
         }
         setTimeout(clock, 1000);
+    }
+    function play_again() {
+        var endscreen = document.getElementById("endscreen");
+        endscreen.style.display = "none";
+        var startscreen = document.getElementById("startscreen");
+        startscreen.style.display = "block";
     }
 })(Abschlussaufgabe || (Abschlussaufgabe = {}));
 //# sourceMappingURL=Main.js.map

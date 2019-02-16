@@ -1,28 +1,37 @@
+//Abschlussaufgabe - Rodelhang Terminator
+//Dominik Seyfried
+//256734
+//17.02.2019
+//Hiermit versichere ich, dass ich diesen
+//Code selbst geschrieben habe. Er wurde
+//nicht kopiert und auch nicht diktiert.
 var Abschlussaufgabe;
 (function (Abschlussaufgabe) {
     window.addEventListener("load", init);
     var serverAddress = "https://seyfrieo.herokuapp.com/";
+    var eventlistener;
+    var insertButton;
     function init(_event) {
         console.log("Init");
-        var insertButton = document.getElementById("insert");
-        //let refreshButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("refresh");
-        insertButton.addEventListener("click", insert);
-        //refreshButton.addEventListener("click", refresh);
+        insertButton = document.getElementById("insert");
+        refresh(_event);
+        eventlistener = insertButton.addEventListener("click", insert);
     }
     function insert(_event) {
         var input = document.getElementById("name");
         var query = "command=insert";
         query += "&name=" + input.value;
         query += "&score=" + Abschlussaufgabe.score;
-        console.log(query);
         sendRequest(query, handleInsertResponse);
-        document.removeEventListener("click", insert);
+        refresh(_event);
+        eventlistener = insertButton.removeEventListener("click", insert);
     }
-    // function refresh(_event: Event): void {
-    //     let query: string = "command=refresh";
-    //     sendRequest(query, handleFindResponse);
-    // }
-    //
+    function refresh(_event) {
+        var query = "command=refresh";
+        sendRequest(query, handleFindResponse);
+        console.log("refresh");
+        setTimeout(refresh, 1000);
+    }
     function sendRequest(_query, _callback) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", serverAddress + "?" + _query, true);
@@ -35,33 +44,28 @@ var Abschlussaufgabe;
             alert(xhr.response);
         }
     }
-    // function playerDataSort(_a: StudentData, _b: StudentData): number {
-    //     let returnNumber: number;
-    //     if (_a.score > _b.score) {
-    //         returnNumber = -1;
-    //     }
-    //     else if (_a.score< _b.score) {
-    //         returnNumber = 1;
-    //     }
-    //     else {
-    //         returnNumber = 0;
-    //     }
-    //     return returnNumber;
-    //
-    // }
-    //
-    // function handleFindResponse(_event: ProgressEvent): void {
-    //     let xhr: XMLHttpRequest = (<XMLHttpRequest>_event.target);
-    //     if (xhr.readyState == XMLHttpRequest.DONE) {
-    //         let output: HTMLElement = document.getElementById("scores");
-    //         let scores: number[] = [];
-    //         let responseAsJson: StudentData[] = JSON.parse(xhr.response);
-    //         responseAsJson.sort(playerDataSort);
-    //         for (let i: number = 0; i < responseAsJson.length; i++) {
-    //             console.log(responseAsJson[i].name);
-    //             output.innerHTML += "<p id='showScores'><strong>Name: </strong>" + responseAsJson[i].name + "<br><strong>Score: </strong>" + responseAsJson[i].score + "</p>";
-    //         }
-    //     }
-    // }
+    function playerDataSort(_a, _b) {
+        if (_a.score > _b.score) {
+            return -1;
+        }
+        else if (_a.score < _b.score) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+    function handleFindResponse(_event) {
+        var xhr = _event.target;
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            var output = [];
+            var responseAsJson = JSON.parse(xhr.response);
+            responseAsJson.sort(playerDataSort);
+            for (var i = 1; i < 10; i++) {
+                output[i] = document.getElementById(i.toString());
+                output[i].innerHTML = i.toString() + ". " + responseAsJson[i].name + "  " + responseAsJson[i].score;
+            }
+        }
+    }
 })(Abschlussaufgabe || (Abschlussaufgabe = {}));
 //# sourceMappingURL=DatabaseClient.js.map
